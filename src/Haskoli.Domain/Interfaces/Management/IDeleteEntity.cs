@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Haskoli.Domain.Interfaces.Management
+{
+    public interface IDeleteEntity<TKey> : IAddEntity<TKey>
+    {
+        public bool IsDeleted { get; set; }
+        public DateTime? DeleteDate { get; set; }
+        public string? DeletedBy { get; set; }
+    }
+}
