@@ -1,7 +1,7 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.7.11911.148 stable
+VisualStudioVersion = 18.7.11911.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Haskoli.Domain", "src\Haskoli.Domain\Haskoli.Domain.csproj", "{C1E2D451-E354-450E-82C4-1F3B26C6C942}"
 EndProject
@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E64600C3-F0D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D0C449CA-F181-42E7-9CCD-B9B64D3C8B7C}"
 	ProjectSection(SolutionItems) = preProject
+		docs\PRD.md = docs\PRD.md
 		docs\README.md = docs\README.md
 	EndProjectSection
 EndProject
@@ -35,6 +36,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{5C641CFF-7D3D-8E4C-1D20-89A26F0AE923}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Haskoli.UI", "src\Haskoli.UI\Haskoli.UI.esproj", "{175A9EA1-793F-4A0D-8D39-D18957955099}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haskoli.NTest", "tests\Haskoli.NTest\Haskoli.NTest.csproj", "{70419425-52B9-4DEA-A4B8-5F32EEAD355E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +77,10 @@ Global
 		{175A9EA1-793F-4A0D-8D39-D18957955099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{175A9EA1-793F-4A0D-8D39-D18957955099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{175A9EA1-793F-4A0D-8D39-D18957955099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70419425-52B9-4DEA-A4B8-5F32EEAD355E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70419425-52B9-4DEA-A4B8-5F32EEAD355E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70419425-52B9-4DEA-A4B8-5F32EEAD355E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70419425-52B9-4DEA-A4B8-5F32EEAD355E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +98,7 @@ Global
 		{2C623D6C-D59E-45DE-B814-1BF6B88A4404} = {E64600C3-F0D9-461C-B1F9-2AB69B2E7267}
 		{5C641CFF-7D3D-8E4C-1D20-89A26F0AE923} = {E64600C3-F0D9-461C-B1F9-2AB69B2E7267}
 		{175A9EA1-793F-4A0D-8D39-D18957955099} = {5C641CFF-7D3D-8E4C-1D20-89A26F0AE923}
+		{70419425-52B9-4DEA-A4B8-5F32EEAD355E} = {CDC7FC18-9E89-4AF7-93F5-439B72ED6D45}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B82448B-1AE3-4BA6-8759-1C3DF4E82373}
