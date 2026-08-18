@@ -9,9 +9,14 @@ namespace Haskoli.Infrastructure.Persistence.Data
 
         public HaskoliDbContext CreateDbContext(string[] args)
         {
+            /* appsettings.json viaja con las cadenas en blanco por ser plantilla, así que sin el
+               archivo del entorno las herramientas de EF se quedan sin cadena de conexión. */
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
+
             var configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
+            .AddJsonFile($"appsettings.{environment}.json", optional: true)
             .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<HaskoliDbContext>();

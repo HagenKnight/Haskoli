@@ -19,9 +19,11 @@ namespace Haskoli.Infrastructure.Common.ServiceCollection
         {
             /* Repositories */
             services.AddTransient<ICountryRepository<HaskoliDbContext>, CountryRepository>();
+            services.AddTransient<IStudentRepository<HaskoliDbContext>, StudentRepository>();
 
             /* Services */
             services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<IStudentService, StudentService>();
 
             /* Helpers */
             services.AddSingleton<IUriService>(o =>

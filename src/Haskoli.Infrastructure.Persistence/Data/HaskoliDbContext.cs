@@ -26,6 +26,7 @@ namespace Haskoli.Infrastructure.Persistence.Data
 
         // Dbset for Entities */
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +48,7 @@ namespace Haskoli.Infrastructure.Persistence.Data
             }
 
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentConfiguration());
         }
 
 

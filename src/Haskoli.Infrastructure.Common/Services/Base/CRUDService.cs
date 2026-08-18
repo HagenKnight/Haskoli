@@ -17,6 +17,12 @@ namespace Haskoli.Infrastructure.Persistence.Services.Base
         where TRepoAll : IBaseRepository<TEntity, TContext>
         where TContext : DbContext, new()
     {
+        /// <summary>Mismo autor que sella HaskoliDbContext.SaveChangesAsync mientras no haya usuario autenticado.</summary>
+        private const string AuditUser = "system";
+
+        private const int MinPageSize = 10;
+        private const int MaxPageSize = 50;
+
         internal int _iCount;
         internal readonly IMapper _mapper;
         internal readonly TRepoAll _repository;
@@ -124,16 +130,18 @@ namespace Haskoli.Infrastructure.Persistence.Services.Base
 
         public async Task<IEnumerable<TQueryDTO>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default, string fields = null, string orderBy = null)
         {
-            _iCount = _repository.GetCount();
-
-            if (pageNumber < 1 || (pageNumber > ((int)Math.Ceiling(_iCount / (double)pageSize))))
-                throw new PageRowIndexNotFound(pageNumber);
-
-            if (pageSize < 10)
+            /* El tamaño se valida antes que el índice para no dividir por un tamaño inválido. */
+            if (pageSize < MinPageSize)
                 throw new PageRowMinimumException(pageSize);
 
-            if (pageSize > 50)
+            if (pageSize > MaxPageSize)
                 throw new PageRowMaximumException(pageSize);
+
+            _iCount = _repository.GetCount();
+
+            /* Sin registros no hay páginas, pero pedir la primera es legítimo y devuelve una colección vacía. */
+            if (pageNumber < 1 || (_iCount > 0 && pageNumber > (int)Math.Ceiling(_iCount / (double)pageSize)))
+                throw new PageRowIndexNotFound(pageNumber);
 
             IEnumerable<TEntity> list = await _repository.GetPagedAsync(pageNumber, pageSize, cancellationToken, orderBy);
 
@@ -145,16 +153,18 @@ namespace Haskoli.Infrastructure.Persistence.Services.Base
         }
         public async Task<IEnumerable<TQueryDTO>> GetPagedAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default, string fields = null, string orderBy = null)
         {
-            _iCount = _repository.GetCount(predicate);
-
-            if (pageNumber < 1 || (pageNumber > ((int)Math.Ceiling(_iCount / (double)pageSize))))
-                throw new PageRowIndexNotFound(pageNumber);
-
-            if (pageSize < 10)
+            /* El tamaño se valida antes que el índice para no dividir por un tamaño inválido. */
+            if (pageSize < MinPageSize)
                 throw new PageRowMinimumException(pageSize);
 
-            if (pageSize > 50)
+            if (pageSize > MaxPageSize)
                 throw new PageRowMaximumException(pageSize);
+
+            _iCount = _repository.GetCount(predicate);
+
+            /* Sin registros no hay páginas, pero pedir la primera es legítimo y devuelve una colección vacía. */
+            if (pageNumber < 1 || (_iCount > 0 && pageNumber > (int)Math.Ceiling(_iCount / (double)pageSize)))
+                throw new PageRowIndexNotFound(pageNumber);
 
             IEnumerable<TEntity> list = await _repository.GetPagedAsync(pageNumber, pageSize, predicate, cancellationToken, orderBy);
 
@@ -217,7 +227,7 @@ namespace Haskoli.Infrastructure.Persistence.Services.Base
 
             if (autoSave)
             {
-                Mapper.Map(objDTO, deletedEntity); deletedEntity.IsDeleted = true; deletedEntity.DeleteDate = DateTime.UtcNow;
+                Mapper.Map(objDTO, deletedEntity); deletedEntity.IsDeleted = true; deletedEntity.DeleteDate = DateTime.UtcNow; deletedEntity.DeletedBy = AuditUser;
                 _repository.Update(deletedEntity);
             }
             else
